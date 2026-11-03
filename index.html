@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propuesta de colaboración · Instituto Niño Jesús · ATOM Soluciones IT</title>
+<meta name="description" content="Propuesta de colaboración entre ATOM Soluciones IT y el Instituto Niño Jesús para desarrollar la web institucional y el sistema de gestión académica junto a los alumnos de la pasantía.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#0088EA; --blue-d:#0066B8; --blue-l:#E8F4FD; --blue-ll:#F3F9FE;
+  --ink:#0B0B0B; --text:#3F4654; --muted:#7A8394; --line:#E4E8EE; --bg:#FFFFFF; --bg2:#F7F9FC;
+  --ok:#16A34A; --warn:#E5484D; --amber:#D98E04;
+  --r:18px; --shadow:0 10px 30px rgba(11,40,80,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{font-family:'Manrope',system-ui,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{color:var(--ink);line-height:1.15;letter-spacing:-.02em}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--blue)}
+section{padding:84px 0;position:relative}
+section.alt{background:var(--bg2)}
+.sec-head{margin-bottom:38px;max-width:680px}
+.sec-head .num{display:block;margin-bottom:10px}
+.sec-head h2{font-size:clamp(28px,4.4vw,42px);font-weight:800;margin-bottom:14px}
+.sec-head p{font-size:17px}
+
+/* logo */
+.logo{font-weight:800;color:var(--blue);letter-spacing:-.04em;font-size:30px;line-height:1;display:inline-flex;align-items:center}
+.logo img{height:30px;display:block}
+
+/* progress + nav */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--blue);width:0;z-index:100;transition:width .1s}
+nav.top{position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:.3s}
+nav.top.scrolled{border-color:var(--line)}
+nav.top .in{display:flex;align-items:center;justify-content:space-between;height:62px}
+nav.top ul{display:flex;gap:4px;list-style:none}
+nav.top ul a{font-size:13px;font-weight:600;padding:8px 12px;border-radius:999px;color:var(--text);transition:.2s}
+nav.top ul a:hover{background:var(--blue-l);color:var(--blue-d)}
+nav.top ul a.active{background:var(--blue);color:#fff}
+@media(max-width:900px){nav.top ul{display:none}}
+
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:110px 0 70px;background:
+  radial-gradient(900px 500px at 85% 10%,rgba(0,136,234,.13),transparent 60%),
+  radial-gradient(600px 400px at 0% 100%,rgba(0,136,234,.08),transparent 60%),#fff}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(36px,6.2vw,64px);font-weight:800;margin:16px 0 20px}
+.hero h1 span{color:var(--blue)}
+.hero p.lead{font-size:18px;max-width:560px;margin-bottom:28px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:14px 24px;border-radius:999px;font-weight:700;font-size:14px;transition:.25s;display:inline-block}
+.btn.primary{background:var(--blue);color:#fff;box-shadow:0 8px 20px rgba(0,136,234,.3)}
+.btn.primary:hover{transform:translateY(-2px);background:var(--blue-d)}
+.btn.ghost{border:1.5px solid var(--line);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--blue);color:var(--blue)}
+.meta{display:flex;gap:28px;flex-wrap:wrap;margin-top:42px;padding-top:24px;border-top:1px solid var(--line)}
+.meta div small{display:block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.meta div b{color:var(--ink);font-size:14px}
+.orbit{position:relative;aspect-ratio:1;max-width:400px;margin:0 auto;width:100%}
+.orbit .ring{position:absolute;inset:0;border:1.5px dashed #BFD9EE;border-radius:50%;animation:spin 40s linear infinite}
+.orbit .ring.r2{inset:15%;animation-duration:28s;animation-direction:reverse}
+.orbit .core{position:absolute;inset:32%;background:var(--blue);border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;text-align:center;font-size:14px;box-shadow:0 20px 50px rgba(0,136,234,.35);padding:10px;line-height:1.2}
+.orbit .node{position:absolute;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:14px;padding:9px 14px;font-size:12px;font-weight:700;color:var(--ink);animation:float 5s ease-in-out infinite}
+.orbit .n1{top:2%;left:30%}.orbit .n2{top:30%;right:-4%;animation-delay:.8s}.orbit .n3{bottom:6%;right:12%;animation-delay:1.6s}.orbit .n4{bottom:20%;left:-4%;animation-delay:2.4s}.orbit .n5{top:26%;left:-2%;animation-delay:3.2s}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes float{50%{transform:translateY(-8px)}}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}.orbit{max-width:300px}}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+/* cards */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;transition:.3s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#cfe3f4}
+.card h3{font-size:19px;margin-bottom:8px;font-weight:700}
+.card .tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.ico{width:44px;height:44px;border-radius:12px;background:var(--blue-l);display:grid;place-items:center;margin-bottom:16px;color:var(--blue)}
+.ico svg{width:22px;height:22px}
+
+/* collab */
+.collab{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch}
+.collab .arrow{display:grid;place-items:center;color:var(--blue)}
+.collab .arrow svg{width:34px}
+.role{border:1.5px solid var(--line);border-radius:var(--r);padding:26px;background:#fff;cursor:pointer;text-align:left;transition:.3s;position:relative}
+.role.on,.role:hover{border-color:var(--blue);box-shadow:var(--shadow)}
+.role.on{background:var(--blue-ll)}
+.role h3{font-size:22px;margin:6px 0 8px;font-weight:800}
+.role ul{list-style:none;margin-top:14px;display:grid;gap:8px;max-height:0;overflow:hidden;opacity:0;transition:.4s}
+.role.on ul{max-height:340px;opacity:1}
+.role li{font-size:14px;padding-left:20px;position:relative}
+.role li:before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.role .hint{font-size:12px;color:var(--muted);margin-top:10px;font-weight:600}
+.role.on .hint{display:none}
+@media(max-width:820px){.collab{grid-template-columns:1fr}.collab .arrow{transform:rotate(90deg)}}
+
+/* timeline etapas */
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;margin-bottom:26px}
+.stages:before{content:"";position:absolute;top:21px;left:16%;right:16%;height:2px;background:var(--line)}
+.stg{text-align:center;position:relative;padding:0 8px}
+.stg .dot{width:42px;height:42px;border-radius:50%;background:#fff;border:2px solid var(--line);margin:0 auto 12px;display:grid;place-items:center;font-weight:800;color:var(--muted);transition:.3s;position:relative;z-index:1}
+.stg.on .dot{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 0 0 6px var(--blue-l)}
+.stg b{display:block;color:var(--ink);font-size:15px}
+.stg small{color:var(--muted);font-size:12px;font-weight:600}
+.stg button{display:block;width:100%}
+.stage-panel{background:#fff;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:var(--r);padding:30px;min-height:240px}
+.stage-panel h3{font-size:24px;margin:6px 0 10px;font-weight:800}
+.stage-panel ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 24px;margin-top:18px}
+.stage-panel li{padding-left:22px;position:relative;font-size:15px}
+.stage-panel li:before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;border-radius:2px;background:var(--blue);transform:rotate(45deg)}
+@media(max-width:640px){.stage-panel ul{grid-template-columns:1fr}.stg small{display:none}}
+
+/* panel mockups (desktop style) */
+.win{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.win .bar{display:flex;align-items:center;gap:7px;padding:12px 16px;border-bottom:1px solid var(--line);background:#FBFCFE}
+.win .bar i{width:10px;height:10px;border-radius:50%;background:#D5DAE2}
+.win .bar span{margin-left:10px;font-size:11px;font-weight:700;color:var(--muted)}
+.panel{display:grid;grid-template-columns:170px 1fr;min-height:430px}
+.side{border-right:1px solid var(--line);padding:16px 10px;background:#FBFCFE}
+.side button{display:flex;gap:8px;align-items:center;width:100%;padding:10px 12px;border-radius:10px;font-size:12.5px;font-weight:700;color:var(--text);margin-bottom:4px;text-align:left;transition:.2s}
+.side button svg{width:16px;height:16px;flex-shrink:0}
+.side button:hover{background:var(--blue-l)}
+.side button.on{background:var(--blue);color:#fff}
+.main{padding:20px;min-width:0}
+.main h4{font-size:19px;font-weight:800;margin-bottom:4px}
+.main .sub{font-size:12px;color:var(--muted);margin-bottom:16px;font-weight:600}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+select,input[type=number]{font-family:inherit;font-size:12.5px;font-weight:600;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;color:var(--ink);outline:none}
+select:focus,input:focus{border-color:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:8px 8px;border-bottom:1px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid #F0F2F6;color:var(--ink);font-weight:600}
+.att{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.att button{padding:5px 11px;font-size:11px;font-weight:700;color:var(--muted);transition:.15s}
+.att button.p.on{background:var(--ok);color:#fff}
+.att button.a.on{background:var(--warn);color:#fff}
+.att button.t.on{background:var(--amber);color:#fff}
+.grade{width:62px;text-align:center}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat div{background:var(--blue-ll);border:1px solid #D7EAF8;border-radius:12px;padding:12px}
+.stat b{display:block;font-size:22px;color:var(--ink);font-weight:800;line-height:1}
+.stat small{font-size:10.5px;color:var(--muted);font-weight:700}
+.btn-s{background:var(--blue);color:#fff;border-radius:10px;padding:9px 16px;font-size:12px;font-weight:700;transition:.2s}
+.btn-s:hover{background:var(--blue-d)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,30px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.3s;z-index:200}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.bars{display:grid;gap:12px}
+.bar-row{display:grid;grid-template-columns:110px 1fr 44px;gap:10px;align-items:center;font-size:12.5px;font-weight:700;color:var(--ink)}
+.bar-row .t{height:10px;background:#EAF1F8;border-radius:99px;overflow:hidden}
+.bar-row .t i{display:block;height:100%;background:var(--blue);border-radius:99px;width:0;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.exam{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px}
+.exam .d{background:var(--blue-l);color:var(--blue-d);border-radius:10px;padding:6px 10px;text-align:center;font-weight:800;line-height:1.1;font-size:17px;min-width:50px}
+.exam .d small{display:block;font-size:9px;letter-spacing:.1em}
+.exam b{display:block;color:var(--ink);font-size:13px}
+.exam span{font-size:11.5px;color:var(--muted);font-weight:600}
+@media(max-width:700px){.panel{grid-template-columns:1fr}.side{display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px}.side button{width:auto;white-space:nowrap}.stat{grid-template-columns:1fr 1fr 1fr}}
+
+/* roles access */
+.acc{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:820px){.acc{grid-template-columns:1fr}}
+.acc .card ul{list-style:none;display:grid;gap:8px;margin-top:12px}
+.acc .card li{font-size:14px;padding-left:20px;position:relative}
+.acc .card li:before{content:"";position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.acc .card.future{border-style:dashed;background:transparent}
+
+/* beneficios */
+.ben{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:820px){.ben{grid-template-columns:1fr}}
+.tgl{display:inline-flex;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px;margin-bottom:22px}
+.tgl button{padding:9px 20px;border-radius:999px;font-size:13px;font-weight:700;color:var(--text);transition:.2s}
+.tgl button.on{background:var(--blue);color:#fff}
+.benlist{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:820px){.benlist{grid-template-columns:1fr}}
+
+/* roadmap futuro */
+.future-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:820px){.future-list{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.future-list{grid-template-columns:1fr}}
+.fut{border:1.5px dashed #BBD6EC;border-radius:16px;padding:18px;background:#fff}
+.fut b{display:block;color:var(--ink);margin-bottom:4px}
+.fut span{font-size:13.5px}
+
+/* next steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:s}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px;position:relative;counter-increment:s;cursor:pointer;transition:.3s}
+.step:before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--blue-l);color:var(--blue-d);font-weight:800;margin-bottom:14px;transition:.3s}
+.step.done{border-color:var(--blue);background:var(--blue-ll)}
+.step.done:before{background:var(--blue);color:#fff;content:"\2713"}
+.step h3{font-size:17px;margin-bottom:6px;font-weight:700}
+.step p{font-size:14px}
+
+/* footer */
+footer{background:var(--blue);color:#fff;padding:54px 0 40px}
+footer .in{display:flex;justify-content:space-between;gap:28px;flex-wrap:wrap;align-items:flex-end}
+footer h3{color:#fff;font-size:28px;font-weight:800;margin-bottom:8px}
+footer p{color:rgba(255,255,255,.88);font-size:14px}
+footer .c{display:grid;gap:4px;font-weight:700;font-size:14px}
+footer .copy{margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.25);font-size:12px;color:rgba(255,255,255,.8)}
+
+@media print{nav.top,#progress,.toast{display:none}section{padding:36px 0;break-inside:avoid}.rv{opacity:1!important;transform:none!important}.hero{min-height:auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav class="top" id="nav">
+  <div class="wrap in">
+    <a href="#inicio" class="logo" aria-label="ATOM"><img src="logo-atom.svg" alt="atom." onerror="this.replaceWith(document.createTextNode('atom.'))"></a>
+    <ul id="menu">
+      <li><a href="#propuesta">Propuesta</a></li>
+      <li><a href="#colaboracion">Colaboración</a></li>
+      <li><a href="#etapas">Etapas</a></li>
+      <li><a href="#paneles">Paneles</a></li>
+      <li><a href="#futuro">Futuro</a></li>
+      <li><a href="#pasos">Próximos pasos</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Propuesta de colaboración</span>
+      <h1>La nueva plataforma digital del <span>Instituto Niño Jesús</span></h1>
+      <p class="lead">Una web institucional y un sistema de gestión académica desarrollados junto a los alumnos de la pasantía, con la supervisión de ATOM Soluciones IT.</p>
+      <div class="btns">
+        <a href="#etapas" class="btn primary">Explorar la propuesta</a>
+        <a href="#colaboracion" class="btn ghost">Cómo trabajamos</a>
+      </div>
+      <div class="meta">
+        <div><small>Preparado para</small><b>Instituto Niño Jesús</b></div>
+        <div><small>Preparado por</small><b>ATOM Soluciones IT</b></div>
+        <div><small>Fecha</small><b>Noviembre de 2026</b></div>
+      </div>
+    </div>
+    <div class="orbit" aria-hidden="true">
+      <div class="ring"></div><div class="ring r2"></div>
+      <div class="core">Instituto<br>Niño Jesús</div>
+      <div class="node n1">Web institucional</div>
+      <div class="node n2">Notas</div>
+      <div class="node n3">Asistencias</div>
+      <div class="node n4">Evaluaciones</div>
+      <div class="node n5">Inscripciones</div>
+    </div>
+  </div>
+</header>
+
+<!-- PROPUESTA -->
+<section id="propuesta" class="alt">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="eyebrow num">01 · La propuesta</span>
+      <h2>Una plataforma propia, construida entre todos</h2>
+      <p>Proponemos desarrollar de forma conjunta la presencia digital completa del instituto: un sitio web moderno pensado primero para el celular y, a continuación, un sistema donde directivos y alumnos gestionan y consultan la información académica.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="3"/><path d="M11 18h2"/></svg></div><h3>Web mobile first</h3><p>Diseñada para el celular, el dispositivo que usan las familias. Se adapta a tablets y computadoras.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg></div><h3>Panel administrativo</h3><p>Los directivos cargan notas, asistencias y próximas evaluaciones desde un único lugar.</p></div>
+      <div class="card rv"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><h3>Panel del alumno</h3><p>Cada alumno ve sus evaluaciones, notas y asistencias de todas las materias.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- COLABORACIÓN -->
+<section id="colaboracion">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="eyebrow num">02 · Modelo de colaboración</span>
+      <h2>Los alumnos desarrollan, ATOM supervisa</h2>
+      <p>No es una contratación: el desarrollo sale de la pasantía. Los chicos viven un proyecto real de punta a punta y el instituto recibe una plataforma hecha a su medida. Tocá cada rol para ver su responsabilidad.</p>
+    </div>
+    <div class="collab rv">
+      <button class="role on" data-role>
+        <span class="eyebrow">Equipo de pasantes</span>
+        <h3>Alumnos del instituto</h3>
+        <p>Quienes desarrollan el proyecto.</p>
+        <ul>
+          <li>Diseño de las pantallas y desarrollo del sitio</li>
+          <li>Programación de los paneles de directivos y alumnos</li>
+          <li>Pruebas y mejoras con feedback del instituto</li>
+          <li>Presentación final del proyecto terminado</li>
+        </ul>
+        <div class="hint">Tocar para ver más</div>
+      </button>
+      <div class="arrow"><svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h30M26 4l8 8-8 8"/></svg></div>
+      <button class="role" data-role>
+        <span class="eyebrow">Mentoría técnica</span>
+        <h3>ATOM Soluciones IT</h3>
+        <p>Quienes guían y supervisan.</p>
+        <ul>
+          <li>Definición de la arquitectura y buenas prácticas</li>
+          <li>Revisión del trabajo y control de calidad</li>
+          <li>Metodologías de trabajo y uso de IA aplicado al desarrollo</li>
+          <li>Acompañamiento técnico en cada etapa</li>
+        </ul>
+        <div class="hint">Tocar para ver más</div>
+      </button>
+    </div>
+    <div style="margin-top:34px">
+      <div class="tgl rv" id="benTgl"><button class="on" data-b="inst">Para el instituto</button><button data-b="alu">Para los alumnos</button></div>
+      <div class="benlist" id="benList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ETAPAS -->
+<section id="etapas" class="alt">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="eyebrow num">03 · Etapas del proyecto</span>
+      <h2>Primero la web, después los paneles</h2>
+      <p>El proyecto avanza por etapas. Cada una se entrega funcionando antes de empezar la siguiente. Elegí una etapa para ver el detalle.</p>
+    </div>
+    <div class="stages rv" id="stages">
+      <div class="stg on"><button data-s="0"><span class="dot">1</span><b>Sitio web</b><small>Mobile first</small></button></div>
+      <div class="stg"><button data-s="1"><span class="dot">2</span><b>Panel directivos</b><small>Notas y asistencias</small></button></div>
+      <div class="stg"><button data-s="2"><span class="dot">3</span><b>Panel alumnos</b><small>Consulta personal</small></button></div>
+    </div>
+    <div class="stage-panel rv" id="stagePanel"></div>
+  </div>
+</section>
+
+<!-- PANELES -->
+<section id="paneles" class="alt">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="eyebrow num">04 · Etapas 2 y 3 · Paneles</span>
+      <h2>Gestión académica en un solo lugar</h2>
+      <p>Probá las maquetas: tomá asistencia, cargá una nota o mirá cómo ve el alumno su información. Los datos son de ejemplo.</p>
+    </div>
+
+    <div class="acc rv" style="margin-bottom:46px">
+      <div class="card"><span class="tag">Directivos</span><h3>Panel administrativo</h3><ul><li>Cargar notas por materia y curso</li><li>Registrar asistencias</li><li>Publicar próximas evaluaciones</li></ul></div>
+      <div class="card"><span class="tag">Alumnos</span><h3>Panel del alumno</h3><ul><li>Ver evaluaciones próximas</li><li>Consultar notas por materia</li><li>Revisar asistencias</li></ul></div>
+      <div class="card future"><span class="tag">A futuro</span><h3>Profesores</h3><ul><li>Cargar notas y asistencias de sus materias</li><li>Subir información y novedades</li></ul></div>
+    </div>
+
+    <div class="tgl rv" id="panTgl"><button class="on" data-p="dir">Vista del directivo</button><button data-p="alu">Vista del alumno</button></div>
+
+    <div class="win rv" id="winDir">
+      <div class="bar"><i></i><i></i><i></i><span>Panel administrativo · Instituto Niño Jesús</span></div>
+      <div class="panel">
+        <div class="side" id="dirSide">
+          <button class="on" data-d="asis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>Asistencias</button>
+          <button data-d="notas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg>Notas</button>
+          <button data-d="eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Evaluaciones</button>
+        </div>
+        <div class="main" id="dirMain"></div>
+      </div>
+    </div>
+
+    <div class="win rv" id="winAlu" style="display:none">
+      <div class="bar"><i></i><i></i><i></i><span>Panel del alumno · Mi espacio</span></div>
+      <div class="panel">
+        <div class="side" id="aluSide">
+          <button class="on" data-a="res"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg>Resumen</button>
+          <button data-a="notas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg>Mis notas</button>
+          <button data-a="asis"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg>Asistencias</button>
+          <button data-a="eval"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>Evaluaciones</button>
+        </div>
+        <div class="main" id="aluMain"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURO -->
+<section id="futuro">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="eyebrow num">05 · Hacia adelante</span>
+      <h2>Una base preparada para crecer</h2>
+      <p>La plataforma se construye con una arquitectura pensada para sumar funcionalidades. Estas son algunas ideas que se podrían incorporar más adelante.</p>
+    </div>
+    <div class="future-list">
+      <div class="fut rv"><b>Acceso para profesores</b><span>Cada docente carga notas y asistencias de sus propias materias.</span></div>
+      <div class="fut rv"><b>Comunicados y circulares</b><span>Información institucional publicada desde el panel.</span></div>
+      <div class="fut rv"><b>Material de estudio</b><span>Subida de apuntes y consignas por materia.</span></div>
+      <div class="fut rv"><b>Acceso para familias</b><span>Seguimiento del alumno para padres y tutores.</span></div>
+      <div class="fut rv"><b>Inscripción online</b><span>Formularios digitales y seguimiento de cada postulación.</span></div>
+      <div class="fut rv"><b>Boletines digitales</b><span>Generación y descarga de boletines en PDF.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PASOS -->
+<section id="pasos" class="alt">
+  <div class="wrap">
+    <div class="sec-head rv"><span class="eyebrow num">06 · Próximos pasos</span>
+      <h2>Cómo empezamos</h2>
+      <p>Tocá cada paso para marcarlo como avanzado.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv" data-step><h3>Reunión de alineación</h3><p>Validamos con los directivos el alcance de cada etapa y las secciones del sitio.</p></div>
+      <div class="step rv" data-step><h3>Formalización de la colaboración</h3><p>Acordamos los términos de trabajo entre el instituto, ATOM y los alumnos pasantes.</p></div>
+      <div class="step rv" data-step><h3>Inicio del desarrollo</h3><p>Los alumnos comienzan con la etapa 1: el sitio web mobile first.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="in">
+      <div><h3>Construyamos juntos esta plataforma</h3><p>Una oportunidad para el instituto y para sus alumnos.</p></div>
+      <div class="c"><span>ATOM Soluciones IT</span><span>info@atomsolucionesit.com.ar · +54 11 26678238</span><span>atomsolucionesit.com.ar · Crnel. López 687/9, Paso de los Libres, Corrientes</span></div>
+    </div>
+    <div class="copy">ATOM Soluciones IT · Propuesta de colaboración · Instituto Niño Jesús · Noviembre de 2026</div>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const toast=(m)=>{const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1800)};
+
+/* progress, nav, reveal */
+const nav=$('#nav'), prog=$('#progress');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  nav.classList.toggle('scrolled',h.scrollTop>10);
+},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+$$('.rv').forEach(el=>io.observe(el));
+const links=$$('#menu a'), secs=links.map(a=>$(a.getAttribute('href')));
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(s=>s&&so.observe(s));
+
+/* roles */
+$$('[data-role]').forEach(b=>b.addEventListener('click',()=>{$$('[data-role]').forEach(x=>x.classList.remove('on'));b.classList.add('on')}));
+
+/* beneficios */
+const BEN={
+ inst:[["Plataforma a medida","Un sitio y un sistema pensados para la realidad del instituto."],["Información centralizada","Notas, asistencias y evaluaciones en un solo lugar, siempre actualizadas."],["Presencia digital moderna","Una web cuidada, clara y fácil de usar desde el celular."]],
+ alu:[["Experiencia real","Participan de un proyecto de software de principio a fin, con mentoría profesional."],["Aprendizaje aplicado","Metodologías de trabajo, desarrollo de sistemas y uso de IA en la práctica."],["Un proyecto con su sello","Dejan una obra concreta, usada por su propia institución."]]
+};
+function renderBen(k){$('#benList').innerHTML=BEN[k].map(([t,d])=>`<div class="card"><h3>${t}</h3><p>${d}</p></div>`).join('')}
+renderBen('inst');
+$$('#benTgl button').forEach(b=>b.addEventListener('click',()=>{$$('#benTgl button').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderBen(b.dataset.b)}));
+
+/* etapas */
+const ST=[
+ {t:"Etapa 1",h:"Sitio web institucional",d:"Un sitio moderno, diseñado primero para celulares, que presenta al instituto y facilita el contacto con las familias.",l:["Diseño mobile first, adaptable a cualquier pantalla","Sección institucional","Niveles educativos","Noticias","Inscripciones","Contacto y galería de imágenes"]},
+ {t:"Etapa 2",h:"Panel administrativo para directivos",d:"Un sistema de acceso privado donde la dirección gestiona la información académica del instituto.",l:["Carga de notas por materia","Registro de asistencias","Publicación de próximas evaluaciones","Acceso seguro con usuario y contraseña","Base lista para sumar profesores"]},
+ {t:"Etapa 3",h:"Panel del alumno",d:"Cada alumno ingresa con su usuario y consulta su situación académica de forma clara.",l:["Evaluaciones próximas","Notas por materia","Asistencias por materia","Resumen general del alumno","Diseño pensado para el celular"]}
+];
+function renderStage(i){
+  const s=ST[i];$('#stagePanel').innerHTML=`<span class="eyebrow">${s.t}</span><h3>${s.h}</h3><p>${s.d}</p><ul>${s.l.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  $$('.stg').forEach((e,j)=>e.classList.toggle('on',j===i));
+}
+renderStage(0);
+$$('#stages button').forEach(b=>b.addEventListener('click',()=>renderStage(+b.dataset.s)));
+
+/* panels toggle */
+$$('#panTgl button').forEach(b=>b.addEventListener('click',()=>{
+  $$('#panTgl button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  $('#winDir').style.display=b.dataset.p==='dir'?'':'none';
+  $('#winAlu').style.display=b.dataset.p==='alu'?'':'none';
+  if(b.dataset.p==='alu')renderAlu(curA);else renderDir(curD);
+}));
+
+/* data demo */
+const MATS=['Matemática','Lengua','Historia','Biología','Inglés'];
+const ALUMNOS=['Agustina Benítez','Bruno Cabral','Camila Duarte','Franco Giménez','Lucía Martínez','Mateo Romero'];
+const state={asis:ALUMNOS.map((_,i)=>i===3?'a':i===1?'t':'p'),notas:ALUMNOS.map((_,i)=>[8,7,9,6,8,10][i]),mat:0};
+const EVALS=[{d:'18',m:'NOV',t:'Evaluación de Matemática',s:'Funciones y ecuaciones'},{d:'21',m:'NOV',t:'Trabajo práctico de Biología',s:'Entrega grupal'},{d:'25',m:'NOV',t:'Evaluación de Lengua',s:'Comprensión lectora'},{d:'28',m:'NOV',t:'Oral de Historia',s:'Unidad 4'}];
+let curD='asis',curA='res';
+const matSel=()=>`<select id="matSel">${MATS.map((m,i)=>`<option value="${i}" ${i===state.mat?'selected':''}>${m}</option>`).join('')}</select>`;
+
+function renderDir(v){
+  curD=v;$$('#dirSide button').forEach(b=>b.classList.toggle('on',b.dataset.d===v));
+  const m=$('#dirMain');
+  if(v==='asis'){
+    const p=state.asis.filter(x=>x==='p').length,a=state.asis.filter(x=>x==='a').length,t=state.asis.filter(x=>x==='t').length;
+    m.innerHTML=`<h4>Asistencias</h4><div class="sub">5.º año · ${MATS[state.mat]} · Hoy</div>
+    <div class="row">${matSel()}</div>
+    <div class="stat"><div><b>${p}</b><small>Presentes</small></div><div><b>${a}</b><small>Ausentes</small></div><div><b>${t}</b><small>Tardanzas</small></div></div>
+    <table><tr><th>Alumno</th><th>Estado</th></tr>${ALUMNOS.map((n,i)=>`<tr><td>${n}</td><td><span class="att" data-i="${i}"><button class="p ${state.asis[i]==='p'?'on':''}" data-v="p">Presente</button><button class="t ${state.asis[i]==='t'?'on':''}" data-v="t">Tarde</button><button class="a ${state.asis[i]==='a'?'on':''}" data-v="a">Ausente</button></span></td></tr>`).join('')}</table>
+    <div class="row" style="margin-top:14px"><button class="btn-s" id="saveA">Guardar asistencia</button></div>`;
+    $$('.att button',m).forEach(b=>b.addEventListener('click',()=>{state.asis[+b.parentNode.dataset.i]=b.dataset.v;renderDir('asis')}));
+    $('#saveA').onclick=()=>toast('Asistencia guardada (demo)');
+  }
+  if(v==='notas'){
+    const avg=(state.notas.reduce((a,b)=>a+b,0)/state.notas.length).toFixed(1);
+    m.innerHTML=`<h4>Carga de notas</h4><div class="sub">5.º año · ${MATS[state.mat]} · Trimestre 3</div>
+    <div class="row">${matSel()}</div>
+    <div class="stat"><div><b id="avg">${avg}</b><small>Promedio del curso</small></div><div><b>${Math.max(...state.notas)}</b><small>Nota máxima</small></div><div><b>${state.notas.filter(n=>n<6).length}</b><small>Debajo de 6</small></div></div>
+    <table><tr><th>Alumno</th><th>Nota</th></tr>${ALUMNOS.map((n,i)=>`<tr><td>${n}</td><td><input class="grade" type="number" min="1" max="10" step="1" value="${state.notas[i]}" data-i="${i}"></td></tr>`).join('')}</table>
+    <div class="row" style="margin-top:14px"><button class="btn-s" id="saveN">Guardar notas</button></div>`;
+    $$('.grade',m).forEach(inp=>inp.addEventListener('input',()=>{let v=Math.max(1,Math.min(10,+inp.value||1));state.notas[+inp.dataset.i]=v;$('#avg').textContent=(state.notas.reduce((a,b)=>a+b,0)/state.notas.length).toFixed(1)}));
+    $('#saveN').onclick=()=>toast('Notas guardadas (demo)');
+  }
+  if(v==='eval'){
+    m.innerHTML=`<h4>Próximas evaluaciones</h4><div class="sub">Lo que publiques acá lo ven los alumnos en su panel</div>
+    <div class="row"><select id="evM">${MATS.map(x=>`<option>${x}</option>`).join('')}</select><input type="number" id="evD" min="1" max="30" placeholder="Día" style="width:80px"><button class="btn-s" id="addE">Publicar evaluación</button></div>
+    <div id="evList">${EVALS.map(e=>`<div class="exam"><div class="d">${e.d}<small>${e.m}</small></div><div><b>${e.t}</b><span>${e.s}</span></div></div>`).join('')}</div>`;
+    $('#addE').onclick=()=>{const d=$('#evD').value;if(!d){toast('Ingresá el día de la evaluación');return}
+      EVALS.unshift({d:String(d).padStart(2,'0'),m:'DIC',t:'Evaluación de '+$('#evM').value,s:'Nueva evaluación publicada'});renderDir('eval');toast('Evaluación publicada (demo)')};
+  }
+  const ms=$('#matSel');if(ms)ms.onchange=()=>{state.mat=+ms.value;renderDir(curD)};
+}
+$$('#dirSide button').forEach(b=>b.addEventListener('click',()=>renderDir(b.dataset.d)));
+
+/* alumno */
+const NOTAS_A={Matemática:[8,7,9],Lengua:[9,8,10],Historia:[7,8,7],Biología:[8,9,8],Inglés:[10,9,10]};
+const ASIS_A={Matemática:96,Lengua:92,Historia:100,Biología:88,Inglés:94};
+const avgArr=a=>a.reduce((x,y)=>x+y,0)/a.length;
+function renderAlu(v){
+  curA=v;$$('#aluSide button').forEach(b=>b.classList.toggle('on',b.dataset.a===v));
+  const m=$('#aluMain');
+  const pg=avgArr(Object.values(NOTAS_A).map(avgArr)).toFixed(1), pa=Math.round(avgArr(Object.values(ASIS_A)));
+  if(v==='res'){
+    m.innerHTML=`<h4>Hola, Lucía</h4><div class="sub">5.º año · Resumen del trimestre</div>
+    <div class="stat"><div><b>${pg}</b><small>Promedio general</small></div><div><b>${pa}%</b><small>Asistencia</small></div><div><b>${EVALS.length}</b><small>Evaluaciones próximas</small></div></div>
+    <h4 style="font-size:14px;margin-bottom:8px">Próxima evaluación</h4>
+    <div class="exam"><div class="d">${EVALS[0].d}<small>${EVALS[0].m}</small></div><div><b>${EVALS[0].t}</b><span>${EVALS[0].s}</span></div></div>`;
+  }
+  if(v==='notas'){
+    m.innerHTML=`<h4>Mis notas</h4><div class="sub">Promedio por materia</div><div class="bars">${Object.entries(NOTAS_A).map(([k,a])=>`<div class="bar-row"><span>${k}</span><div class="t"><i data-w="${avgArr(a)*10}"></i></div><span>${avgArr(a).toFixed(1)}</span></div>`).join('')}</div>
+    <p style="font-size:12px;color:var(--muted);margin-top:14px;font-weight:600">Tocá una materia para ver el detalle de cada nota.</p><div id="detN"></div>`;
+    $$('.bar-row',m).forEach(r=>r.style.cursor='pointer');
+    $$('.bar-row',m).forEach(r=>r.addEventListener('click',()=>{const k=r.firstElementChild.textContent;$('#detN').innerHTML=`<div class="exam" style="margin-top:8px"><div class="d">${avgArr(NOTAS_A[k]).toFixed(1)}<small>PROM</small></div><div><b>${k}</b><span>Notas: ${NOTAS_A[k].join(' · ')}</span></div></div>`}));
+  }
+  if(v==='asis'){
+    m.innerHTML=`<h4>Mis asistencias</h4><div class="sub">Porcentaje por materia</div><div class="bars">${Object.entries(ASIS_A).map(([k,a])=>`<div class="bar-row"><span>${k}</span><div class="t"><i data-w="${a}"></i></div><span>${a}%</span></div>`).join('')}</div>`;
+  }
+  if(v==='eval'){
+    m.innerHTML=`<h4>Próximas evaluaciones</h4><div class="sub">Publicadas por la dirección</div>${EVALS.map(e=>`<div class="exam"><div class="d">${e.d}<small>${e.m}</small></div><div><b>${e.t}</b><span>${e.s}</span></div></div>`).join('')}`;
+  }
+  requestAnimationFrame(()=>requestAnimationFrame(()=>$$('.t i[data-w]',m).forEach(i=>i.style.width=i.dataset.w+'%')));
+}
+$$('#aluSide button').forEach(b=>b.addEventListener('click',()=>renderAlu(b.dataset.a)));
+renderDir('asis');
+
+/* próximos pasos */
+$$('[data-step]').forEach(s=>s.addEventListener('click',()=>s.classList.toggle('done')));
+</script>
+</body>
+</html>
